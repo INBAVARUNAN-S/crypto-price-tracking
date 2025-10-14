@@ -1,4 +1,3 @@
-import { name } from "ejs";
 import { createContext, useEffect, useState } from "react";
 
 
