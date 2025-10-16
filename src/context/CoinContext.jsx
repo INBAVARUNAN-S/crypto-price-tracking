@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 
-
 export const CoinContext = createContext();
 
 const CoinContextProvider = (props) => {
@@ -19,7 +18,7 @@ const CoinContextProvider = (props) => {
             body: undefined
         };  
 
-        try {
+        try { 
             const response = await fetch(url, options);
             const data = await response.json();
             setAllCoin(data);

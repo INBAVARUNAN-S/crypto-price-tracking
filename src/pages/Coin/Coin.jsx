@@ -6,7 +6,7 @@ import { CoinContext } from '../../context/CoinContext'
 const Coin = () => {
 
   const { coinId } = useParams();
-  const [coinData, setCoinData] = useState();
+  const [coinData, setCoinData] = useState(null);
   const { currency } = useContext(CoinContext);
 
   const fetchCoinData = async () => {
@@ -22,22 +22,23 @@ const Coin = () => {
     }
   }
 
+
   useEffect(() => {
     fetchCoinData();
-  }, [coinId,currency])
+  }, [currency])
 
 
-  if(coinData){
+  if (coinData) {
     return (
       <div className='coin'>
-        <div className="coin-name">
-          <img src={coinData.image.large} alt="" />
+        <div className="coin-name"> 
+          <img src={coinData.image.large || "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400" } />
           <p><b>{coinData.name} ({coinData.symbol.toUpperCase()})</b></p>
         </div>
-      </div>
+      </div> 
     )
-  }else{
-    return(
+  } else {
+    return (
       <div className="spinner">
         <div className="spin">
 
