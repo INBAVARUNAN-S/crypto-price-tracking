@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Coin.css'
 import { useParams } from 'react-router-dom'
 import { CoinContext } from '../../context/CoinContext'
+import LineChart from '../../components/LineChart/LineChart'
 
 const Coin = () => {
 
   const { coinId } = useParams();
   const [coinData, setCoinData] = useState(null);
-  const [historicalData, setHistoricalData] = useState(null); 
+  const [historicalData, setHistoricalData] = useState(null);
   const { currency } = useContext(CoinContext);
 
   const fetchCoinData = async () => {
@@ -40,22 +41,40 @@ const Coin = () => {
 
   useEffect(() => {
     fetchCoinData();
+    fetchHistoricalData();
   }, [currency])
 
 
-  if (coinData, historicalData) { 
+  if (historicalData) {
     return (
       <div className='coin'>
         <div className="coin-name">
-          <img src={coinData?.image?.large || "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"} />
-          <p><b>{coinData?.name} ({coinData?.symbol?.toUpperCase()})</b></p>
+          <img src={coinData.image.large || "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"} />
+          <p><b>{coinData.name} ({coinData.symbol.toUpperCase()}) || Bitcoin</b></p>
         </div>
+        <div className="coin-chart">
+          <LineChart historicalData={historicalData} />
+        </div>
+
+        <div className="coin-info">
+          <ul>
+            <li>Crypto Market Rank</li>
+            <li>{coinData.market_cap_rank}</li>
+          </ul>
+          <ul>
+            <li>Current Price</li>
+            <li>{currency.symbol} {coinData.market_cap_rank.current_price[currency.name].toLocaleString()}</li>
+          </ul>  
+        </div>
+
       </div>
-    ) 
+
+
+    )
   } else {
     return (
       <div className="spinner">
-        <div className="spin"> 
+        <div className="spin">
         </div>
       </div>
     )
